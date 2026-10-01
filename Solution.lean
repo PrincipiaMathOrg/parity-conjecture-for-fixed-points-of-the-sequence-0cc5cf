@@ -1,11 +1,10 @@
-import Mathlib
+module
+
+public import Mathlib
+
+public section
 
 -- Assembled by Principia. Lean is the only judge of this file.
-
--- The goal, fixed before any of the text below was written.
-def PrincipiaGoal : Prop :=
-  ∀ (p : ℕ) (a : ℕ → ℕ) (hp : Odd p) (ha : ∀ n, 1 ≤ n → a n ∣ p * n * (n - 1) / 2) (n : ℕ) (hn : 1 ≤ n) (hfix : a n = n),
-  Odd n
 
 -- doubling
 set_option maxHeartbeats 400000 in
@@ -44,6 +43,6 @@ theorem principia_step_d9a7d629 (p : ℕ) (a : ℕ → ℕ) (hp : Odd p) (ha : �
   rw [hfix] at h
   exact principia_step_6ead028f p n hp hn h
 
-theorem principia_goal : PrincipiaGoal := @principia_step_d9a7d629
-
-#print axioms principia_goal
+theorem principia_goal :
+  ∀ (p : ℕ) (a : ℕ → ℕ) (hp : Odd p) (ha : ∀ n, 1 ≤ n → a n ∣ p * n * (n - 1) / 2) (n : ℕ) (hn : 1 ≤ n) (hfix : a n = n),
+  Odd n := @principia_step_d9a7d629
