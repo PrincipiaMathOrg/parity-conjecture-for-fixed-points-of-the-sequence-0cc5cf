@@ -1,18 +1,16 @@
-module
-
-public import Mathlib.Data.Nat.Basic
-
-public section
+import Mathlib
 
 /-!
-# Advertised statement
+# Challenge
 
-This is the small, trusted surface a mathematical reader should audit. Prefer
-ordinary Mathlib definitions, document every new definition precisely, and
-state every headline claim here without hiding hypotheses or weakening the
-informal result.
+The statement of "Formalise the parity theorem for fixed points of A(p)", fixed before the proof was written.
+Solution.lean proves the declaration below with exactly this type; comparator.json names it.
+The `sorry` here is deliberate: this file states, it does not prove.
 -/
 
-/-- Replace this toy statement and docstring with the result being submitted. -/
-theorem ParityConjectureForFixed.main_result (n : ℕ) : n + n = 2 * n := by
+def PrincipiaGoal : Prop :=
+  ∀ (p : ℕ) (a : ℕ → ℕ) (hp : Odd p) (ha : ∀ n, 1 ≤ n → a n ∣ p * n * (n - 1) / 2) (n : ℕ) (hn : 1 ≤ n) (hfix : a n = n),
+  Odd n
+
+theorem principia_goal : PrincipiaGoal := by
   sorry
