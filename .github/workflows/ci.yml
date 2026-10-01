@@ -28,10 +28,10 @@ jobs:
       - name: Test the metadata validator
         run: ruby test/validate_formalization_test.rb
       - name: Check the canonical template sentinel surface
-        if: github.repository == 'PalomarRegistry/PalomarTemplate'
+        if: github.repository == 'PalomarRegistry/ParityConjectureForFixed'
         run: ruby scripts/validate-formalization.rb --expect-template
       - name: Reject retained template values in a derived repository
-        if: github.repository != 'PalomarRegistry/PalomarTemplate'
+        if: github.repository != 'PalomarRegistry/ParityConjectureForFixed'
         run: ruby scripts/validate-formalization.rb
       - name: Detect the repository licence
         run: |
@@ -107,7 +107,7 @@ jobs:
           MATHLIB_NO_CACHE_ON_UPDATE: "1"
           DISABLE_EQUATIONS: "1"
           DOCGEN_SRC: github
-        run: lake build PalomarTemplate:docs
+        run: lake build ParityConjectureForFixed:docs
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: api-documentation
