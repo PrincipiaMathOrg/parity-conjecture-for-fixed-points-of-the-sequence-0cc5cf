@@ -77,6 +77,6 @@ alignment:
       lean: "principia_goal"
       module: "Solution"
       status: "proved"
-      note: "The statement is the definition PrincipiaGoal in Challenge.lean; read it there."
+      note: "The statement is the declaration in Challenge.lean; read it there."
 
 acknowledgements: "Lean 4 and Mathlib; the Principia harness and its hosted Lean checker."
