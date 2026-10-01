@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Judge Solution against Challenge the way Palomar does: with the `lake
+# Judge Solution against Challenge with the `lake
 # comparator` that ships in this project's own toolchain, replaying the proof
 # through Lean's kernel and the toolchain's bundled independent kernels
 # (NanoDa and con-ron). Nothing is built from a pin; everything that judges
-# comes from `lean-toolchain`, which Palomar requires to be v4.35.0-rc2 or
-# later.
+# comes from `lean-toolchain`, which must be v4.35.0-rc2 or later.
 repository_root=$(cd "$(dirname "$0")/.." && pwd)
 cd "$repository_root"
 
@@ -22,15 +21,15 @@ prefix=$(lean --print-prefix)
 for tool in lake leanexport leanchecker nanoda_bin con-ron; do
   if [ ! -x "$prefix/bin/$tool" ]; then
     echo "error: toolchain $toolchain does not bundle $tool" >&2
-    echo "Palomar requires leanprover/lean4:v4.35.0-rc2 or later" >&2
+    echo "this check needs leanprover/lean4:v4.35.0-rc2 or later" >&2
     exit 1
   fi
 done
 
-# Palomar ignores `enable_nanoda` and rejects `external_kernels` in a submitted
-# comparator.json: it registers the toolchain's bundled kernels itself. This
-# generated copy does the same, so the local check judges as the registry does.
-config=$(mktemp "${TMPDIR:-/tmp}/palomar-comparator.XXXXXX")
+# `enable_nanoda` is ignored and `external_kernels` is not accepted in the
+# checked-in comparator.json: this generated copy registers the toolchain's
+# bundled kernels itself, so every checkout is judged the same way.
+config=$(mktemp "${TMPDIR:-/tmp}/comparator.XXXXXX")
 trap 'rm -f "$config"' EXIT
 python3 - comparator.json "$config" "$prefix" <<'PY'
 import json
@@ -47,7 +46,7 @@ if not isinstance(config, dict):
     print(f"error: {source} must contain one JSON object", file=sys.stderr)
     raise SystemExit(1)
 if "external_kernels" in config:
-    print(f"error: {source}: external_kernels is not a submitter field; Palomar rejects it", file=sys.stderr)
+    print(f"error: {source}: external_kernels is not a submitter field", file=sys.stderr)
     raise SystemExit(1)
 config.pop("enable_nanoda", None)
 config["external_kernels"] = {

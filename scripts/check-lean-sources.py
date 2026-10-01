@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""Check source requirements before builds; full Palomar verification is still required.
-
-Scanner functions follow PalomarSubmission/scripts/source_requirements.py.
-"""
+"""Check source requirements before builds: module headers and file sizes."""
 import os
 import re
 from pathlib import Path
