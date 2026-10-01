@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+public section
 
 /-!
 # Challenge
@@ -8,9 +12,7 @@ Solution.lean proves the declaration below with exactly this type; comparator.js
 The `sorry` here is deliberate: this file states, it does not prove.
 -/
 
-def PrincipiaGoal : Prop :=
+theorem principia_goal :
   ∀ (p : ℕ) (a : ℕ → ℕ) (hp : Odd p) (ha : ∀ n, 1 ≤ n → a n ∣ p * n * (n - 1) / 2) (n : ℕ) (hn : 1 ≤ n) (hfix : a n = n),
-  Odd n
-
-theorem principia_goal : PrincipiaGoal := by
+  Odd n := by
   sorry
