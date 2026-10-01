@@ -1,74 +1,82 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
-# formalization.yaml v0.4, started by Principia from https://principia-staging.anton-8d8.workers.dev/projects/0cc5cf82e6784589bd27717599c10cc0.
-# Replace every TEMPLATE value before submitting.
+# formalization.yaml v0.4, written by Principia from harness run 0b634a08 (https://principia-mcp-staging.anton-8d8.workers.dev/mcp/harness/runs/0b634a08c656b744e8cc3e246cf6860a).
 version: "v0.4"
 
 project:
   name: "Parity conjecture for fixed points of the sequences A(p)"
-  description: >-
-    Let A(p) be the sequence constructed from an odd prime p, and call an integer n a fixed
-    point when a(n)=n. **Parity conjecture.** The fixed points of sequences A(p), for p an
-    odd prime, are odd. This observation appeared in all cases computed in the paper. The
-    statement is also suggested for A(1), but the conjecture here concerns the sequences
-    A(p) with p an odd prime.
+  description: "For an odd prime p, Navarrete and Orellana define a sequence A(p) in which a_p(n) is the least unused positive divisor of q_p(n) = p n (n-1) / 2. Their Conjecture 3.1 says that a fixed point, an index n with a_p(n) = n, is always odd. This formalization proves it: for every odd p and every sequence a with a(n) dividing p n (n-1) / 2 for all n >= 1, a(n) = n implies n odd."
   authors:
-
+    - "anton"
   license: "Apache-2.0"
   responsible_maintainers:
-
+    - "anton"
 
 classification:
   arxiv: ["math.NT"]
-  msc2020: []
+  msc2020: ["11B83", "11A05"]
 
 sources:
-  # Choose one result origin. For a result first presented by this formalization use
-  # type: original-proof and relationship: other; otherwise cite the source with
-  # relationship: formalizes, adapts, or independently-proves.
-  - title: "TEMPLATE: title of the mathematical source"
-    type: "TEMPLATE: paper, book, original-proof, or other"
-    relationship: "TEMPLATE: formalizes, adapts, independently-proves, background, or other"
+  - title: "Parity of fixed points of the Navarrete-Orellana sequences (MathDB 343324), solution write-up"
+    id: "https://principia-staging.anton-8d8.workers.dev/api/ws/files/d62aab2656adf57ccc83ffa4f01e1ef6"
+    type: "paper"
+    location: "https://principia-staging.anton-8d8.workers.dev/projects/0cc5cf82e6784589bd27717599c10cc0"
+    relationship: "formalizes"
+    note: "The solution write-up linked on the Principia project; its Theorem 1 and the proof given there are what Solution.lean follows."
+  - title: "Finding Prime Numbers as Fixed Points of Sequences"
+    authors:
+      - "E. Navarrete"
+      - "D. Orellana"
+    id: "arXiv:1907.10023v1"
+    type: "paper"
+    location: "https://arxiv.org/abs/1907.10023"
+    relationship: "background"
+    note: "Source of the sequences A(p) and of the conjecture (Conjecture 3.1)."
 
 related_formalizations: []
 
 status:
-  scope: >-
-    TEMPLATE: state exactly what is and is not formalized, including any weaker
-    theorem, changed hypotheses, or omitted material.
-  sorry_count: "TEMPLATE: unquoted nonnegative integer"
-  sorry_in_definitions: "TEMPLATE: unquoted nonnegative integer"
+  scope: "The single theorem principia_goal of Solution.lean, with exactly the statement fixed in Challenge.lean, proved from 3 supporting declarations in the same file. The greedy sequence A(p) itself is not defined in Lean; well-definedness of the greedy rule and the even-multiplier case (Corollary 2 of the write-up) are not formalized."
+  # The Challenge.lean placeholder is deliberate and excluded from this count.
+  sorry_count: 0
+  sorry_in_definitions: 0
   axioms: []
+  main_results:
+    - declaration: "principia_goal"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: []
+      comparator_config: "comparator.json"
+      literature_dependencies: []
 
 automation:
   methods:
-    - method: "TEMPLATE: manual, copilot, agent, autonomous, or other"
-      models: ["TEMPLATE: model names, or replace this list with []"]
-      framework: "TEMPLATE: framework name, or n/a"
-      tool_setup: "TEMPLATE: editors, tactics, agents, or other tools used"
+    - method: "agent"
+      models: []
+      framework: "Principia research harness (MCP)"
+      tool_setup: "Claude Code driving the Principia harness for @anton: a skeleton of Lean statements, every proof and the assembled file checked by Lean 4 with Mathlib on Principia's hosted checker."
       cost:
-        wall_time: "TEMPLATE: approximate elapsed effort"
-        spend_usd: "TEMPLATE: amount, subscription-based, or not tracked"
-        hardware: "TEMPLATE: local machine, API-only, or other"
-      prompting_notes: "TEMPLATE: representative prompting notes, or n/a"
-  spend_usd: "TEMPLATE: total amount, subscription-based, or not tracked"
-  notes: "TEMPLATE: describe the overall human and automation workflow"
+        wall_time: "about 5 minutes"
+        spend_usd: "not tracked"
+        hardware: "API-only"
+      prompting_notes: "n/a"
+  spend_usd: "not tracked"
+  notes: "The agent proposed the statements and proofs; Principia composed every Lean file and Lean judged it. #print axioms principia_goal: propext, Classical.choice, Quot.sound. Run page: https://principia-mcp-staging.anton-8d8.workers.dev/mcp/harness/runs/0b634a08c656b744e8cc3e246cf6860a"
 
 fidelity:
-  divergences: "TEMPLATE: all known divergences from the cited source, or none known"
+  divergences: "The Lean statement is more general than the conjecture as posed: it quantifies over every odd natural number p (not only odd primes) and every sequence a with a(n) dividing p n (n-1) / 2 for n >= 1 (not only the greedy sequence A(p)). The greedy sequence satisfies that hypothesis by its defining rule, as the write-up notes; that instantiation is not itself formalized. Division by 2 is truncated division on the natural numbers; it is exact here because n (n-1) is even."
 
 review:
-  status: "TEMPLATE: honest review status, for example self-assessed"
-  reviewers:
-    - "TEMPLATE: reviewer name, or none"
-  notes: "TEMPLATE: describe statement audits and mathematical review performed"
+  status: "self-assessed"
+  reviewers: []
+  notes: "Checked by the Lean kernel. Whether the statement in Challenge.lean says what the project intends has not been audited by a human reviewer."
 
 alignment:
-  namespace: "ParityConjectureForFixed"
+  namespace: "_root_"
   statements:
-    - source: "TEMPLATE: source theorem or section"
-      lean: "ParityConjectureForFixed.main_result"
-      module: "Challenge"
-      status: "TEMPLATE: proved, partial, adapted, or other honest description"
-      note: "TEMPLATE: explain the correspondence and any qualifications"
+    - source: "Theorem 1 of the solution write-up (Conjecture 3.1 of Navarrete and Orellana)"
+      lean: "principia_goal"
+      module: "Solution"
+      status: "proved"
+      note: "The statement is the definition PrincipiaGoal in Challenge.lean; read it there."
 
-acknowledgements: "Mathlib and the Lean community; Principia (principia-math.com)"
+acknowledgements: "Lean 4 and Mathlib; the Principia harness and its hosted Lean checker."
