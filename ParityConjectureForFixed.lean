@@ -1,4 +1,4 @@
 module
 
 public import ParityConjectureForFixed.Basic
-
+public import ParityConjectureForFixed.Doubling

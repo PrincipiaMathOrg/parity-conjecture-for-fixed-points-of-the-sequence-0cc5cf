@@ -1,18 +1,15 @@
 module
 
 public import Mathlib
+public import ParityConjectureForFixed
 
 public section
 
 -- Assembled by Principia. Lean is the only judge of this file.
 
--- doubling
-set_option maxHeartbeats 400000 in
-theorem principia_step_a572ec36 (m n : ℕ) : 2 * (m * n * (n - 1) / 2) = m * n * (n - 1) := by
-  have h : 2 ∣ m * n * (n - 1) := by
-    rw [mul_assoc]
-    exact Dvd.dvd.mul_left (even_iff_two_dvd.mp (Nat.even_mul_pred_self n)) m
-  exact Nat.mul_div_cancel' h
+-- doubling: proved in the library (ParityConjectureForFixed/Doubling.lean)
+theorem principia_step_a572ec36 (m n : ℕ) : 2 * (m * n * (n - 1) / 2) = m * n * (n - 1) :=
+  ParityConjectureForFixed.two_mul_half m n
 
 -- cancel
 set_option maxHeartbeats 400000 in
